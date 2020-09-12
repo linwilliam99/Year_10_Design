@@ -1,67 +1,79 @@
 import tkinter as tk
 
-print("Stage 1")
 
+'''
+Base 2 to Base 10
+1010 
+1 * 2^3 + 0 * 2^2 + 1 * 2^1 + 0 * 2^0 = 1 * 8 + 0 * 4 + 1 * 2 + 0 * 1 = 10
+'''
 
-#process for when you press enter
 def process(*args):
-	print(process) 
-
+	
 	val = ent_value.get()
-	print(val)
-
-	#Check if string is 1's and 0's
-	check = checkValue(val)
-	print(check)
-
-	if(check == True):
-
-		
-		#LEFT OF HERE
+	
 
 
-
-	#If val is 1's and 0's (valid)
-
-		#remove left most 0
-
-		#convert to base 10
-
-		#display conversion
-
-	#else
-		#update with error message
+	#Check to ensure string of 1's and 0's
+	check = check01(val)
+	
 
 
-	#clear entry box
+	if (check == True):
+		val = removeZero(val)
+		result = baseConversion(val)
+		lab_results.config(text = str(val) + " --> " + str(result))
+	else:
+		lab_results.config(text = "INVALID")
 
 	ent_value.delete(0,tk.END)
 
-def checkValue(str):
-	value0 = str.count("0")
-	value1 = str.count("1")
+def baseConversion(str):
 
-	if value0 + value1 == len(str):
+	n = 0
+	total = 0
+
+	for i in range(len(str) - 1, -1, -1): #go through something in reverse
+		total = total + int(str[i]) * 2**n
+		n = n + 1
+
+	return total
+
+
+def removeZero(str):
+
+	'''
+	012345
+	000101
+	'''
+	for i in range(0, len(str),1):
+		if (str[i] == "1"):
+			return str[i:]
+
+	return str
+
+
+def check01(str):
+	
+	num_0 = str.count("0")
+	num_1 = str.count("1")
+
+	if num_0 + num_1 == len(str):
 		return True
-	else:
-		return False
-
+	return False
 
 root = tk.Tk()
 
-#constructing tkinter widgets
-lab_instructions = tk.Label(root, text ="Binary")
+#Construct the widgets
+lab_instructions = tk.Label(root, text = "Enter Binary")
 ent_value = tk.Entry(root)
-lab_results = tk.Label(root, text ="--")
+lab_results = tk.Label(root, text = "--")
 
-#configure widgits
+#Configure Widgets
 
-
-#add the widgets to the window
+#Add the widgets to the window
 lab_instructions.pack()
 ent_value.pack()
 lab_results.pack()
 
 root.bind("<Return>",process)
 root.mainloop()
-
