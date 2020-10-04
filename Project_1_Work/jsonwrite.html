@@ -1,0 +1,38 @@
+<html>
+
+<head>
+</head>
+
+<body>
+</body>
+
+
+
+
+<script>
+import * as fs from 'fs';
+
+
+const review = {
+
+	username: "test1",
+	review: "lorem ipsum epsum",
+	rating: "4/10",
+
+}
+
+const jsonString = JSON.stringify(review, null, 2)
+fs.writeFile('./jsonwrite.json', jsonString, err => {
+    if (err) {
+        console.log('Error writing file', err)
+    } else {
+        console.log('Successfully wrote file')
+    }
+})
+
+
+</script>
+
+
+</html>
+

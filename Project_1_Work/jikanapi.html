@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>search!</title>
+  </head>
+  <body>
+    <div class="search">
+        <input id="search_query" type="text" name="query" />
+        <button id="search">Go</button>
+    </div>
+    <div id="results">
+    </div>
+    <script>
+      // when button clicked, add results 
+      document.getElementById("search").onclick = () => {
+        let query = document.getElementById('search_query').value;
+        let requestUrl = `https://api.jikan.moe/v3/search/anime?q=${query}`;
+        fetch(requestUrl)
+          .then(response => response.json())
+          .then(data => {
+            let results = document.getElementById("results");
+            data.results.forEach(item => {
+              results.innerHTML += item.title + "<br />"
+            });
+          });
+      }
+    </script>
+  </body>
+</html>
