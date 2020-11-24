@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		
+	</title>
+
+	   <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+	<style>
+
+
+	</style>
+</head>
+<body>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Anilist</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+<body>
+  <nav class="white" role="navigation">
+    <div class="nav-wrapper container">
+      <a id="logo-container" href="index.html" class="brand-logo">Anilist</a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="write.html">Write a Review</a></li>
+      </ul>
+
+      <ul id="nav-mobile" class="sidenav">
+        <li><a href="write.html">Write a Review </a></li>
+      </ul>
+      <a href="write.html" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+    </div>
+  </nav>
+
+<div id="index-banner" class="parallax-container">
+    <div class="section no-pad-bot">
+      <div class="container">
+        <br><br>
+        <h1 class="header center teal-text text-lighten-2">Anilist Reccomends</h1>
+        <div class="row center">
+          <h5 class="header col s12 light">Find What To Watch Next</h5>
+        </div>
+        <div class="row center">
+          <a href="search.html" id="download-button" class="btn-large waves-effect waves-light red lighten-1">Select Up To 3 Genres Below</a>
+        </div>
+        <br><br>
+
+      </div>
+    </div>
+    <div class="parallax"><img src="background1.jpg" alt="Unsplashed background img 1"></div>
+  </div>
+
+	<div class="container">
+
+		<select id = "select1">
+			<option value="-1" disabled selected>Choose Genre 1 ...</option>
+			<option value="1">Action</option>
+			<option value="2">Adventure</option>
+			<option value="30">Sports</option>
+			<option value="">N/A</option>
+		</select>
+		
+		<label>Materialize Select</label>
+		
+  		<select id = "select2">
+			<option value="-1" disabled selected>Choose Genre 2 ...</option>
+			<option value="4">Comedy</option>
+			<option value="10">Fantasy</option>
+			<option value="6">Demons</option>
+			<option value="">N/A</option>
+		</select>
+		
+		<label>Materialize Select</label>
+		
+		<select id = "select3" class = "red">
+			<option value="-1" disabled selected>Choose Genre 3 ...</option>
+			<option value="14">Horror</option>
+			<option value="16">Magic</option>
+			<option value="17">Martial Arts</option>
+			<option value="">N/A</option>
+		</select>
+		
+
+
+		<a id = "actionBTN" class="waves-effect waves-light btn">button</a>
+
+	</div>
+<div class="container">
+	<div id="results">
+	</div>
+
+
+
+
+
+
+	<script src ="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    
+
+<script>
+    	//initialization at begining
+    	var options = {
+
+
+    	}
+
+		document.addEventListener('DOMContentLoaded', function() {
+			var elems = document.querySelectorAll('select');
+			var instances = M.FormSelect.init(elems, options);
+		});
+
+
+
+    		//stores genre id's through select box
+    	var s1 = document.getElementById("select1")
+    	var s2 = document.getElementById("select2")
+    	var s3 = document.getElementById("select3")
+		var btn = document.getElementById("actionBTN")
+    	var values = [-1,-1,-1]
+    		// searches using the 3 genres selected
+    	
+
+		var base = "https://api.jikan.moe/v3/search/anime?q=&page=1&sort=desc&order_by=members&limit=5";
+		
+
+		function construct() {
+
+		  return base + "&genre=" + values.join(",")
+		}
+
+		function process() {
+			console.log("Runnning")
+			values[0] = s1.value
+			values[1] = s2.value
+			values[2] = s3.value
+
+			console.log(values)
+
+			flag = true  //assume no negative 1's in values
+
+			for (i = 0; i<values.length; i=i+1){
+				if (values[i]==-1){
+					flag = false
+				}
+			}
+			if (flag === true){ //uses constructed url and returns 5 shows in results
+				console.log("***")
+				url=construct()
+      			fetch(url)
+		        .then(response => response.json())
+		        .then(data => {
+	            let results = document.getElementById("results");
+	            let ctr = 0
+	            results.innerHTML = ""
+	            data.results.forEach(item => {
+	              //Add
+	            if (ctr < 5){
+
+	              results.innerHTML += item.title  += `<img src="${item.image_url}" />` + "<br />"
+	            }
+	     
+	            ctr = ctr + 1
+	            });
+	          });
+	      }
+}
+
+			
+				
+
+		
+
+
+			//Everytime you select set the value in options
+
+			//if options does not have a -1 do your API call
+			//For this to work you hvae to chance your event lister and bind one to each select
+
+
+		
+
+
+
+	//	actionBTN.addEventListener("click",process)
+
+		s1.addEventListener("change",process)
+		s2.addEventListener("change",process)
+		s3.addEventListener("change",process)
+		
+
+
+
+
+
+    </script>
+
+
+</body>
+</html>

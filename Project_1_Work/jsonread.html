@@ -1,0 +1,28 @@
+<script>
+const fs = require('fs')
+
+// jsonwrite.json contents
+//{
+//"username" : "test1",
+//"written_review" : "lorem ipsum",
+//"score" : "4/10",
+//}
+
+
+function jsonRead {
+	fs.readFile('./jsonwrite.json', (err, jsonString) => {
+	    if (err) {
+	        console.log("File read failed:", err)
+	        return
+	    }
+	    console.log('File data:', jsonString) 
+	})
+}
+function jsonParse{
+//turn data into object
+//JSON.parse
+	const review = JSON.parse(jsonString)
+	var username = review.username 
+	console.log username
+}
+</script>

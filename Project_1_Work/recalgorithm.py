@@ -21,4 +21,4 @@ index2 = showCategories[category2]
 if index1 == index2:
     print(shows[index1][index2])
 else:
-    print(shows[index1][index2] + shows[index2][index1])
+    print(shows[index1][index2] + shows[index2][index1])\

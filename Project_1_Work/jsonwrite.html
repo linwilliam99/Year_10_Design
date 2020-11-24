@@ -4,33 +4,35 @@
 </head>
 
 <body>
+	<label for="review">Enter Review:</label><br>
+  	<input type="text" id="review" name="review" value=""><br>
+  	<input type="submit" onclick = "write();">
 </body>
-
-
-
 
 <script>
 import * as fs from 'fs';
 
 
-const review = {
+//const review = {
 
-	username: "test1",
-	review: "lorem ipsum epsum",
-	rating: "4/10",
+//	username: "test1",
+//	review: "lorem ipsum epsum",
+//	rating: "4/10",
 
+//}
+function write{		
+
+	let review = document.getElementById("review").value;
+
+	const jsonString = JSON.stringify(review, null, 2)
+	fs.writeFile('./jsonwrite.json', jsonString, err => {
+	    if (err) {
+	        console.log('Error writing file', err)
+	    } else {
+	        console.log('Successfully wrote file')
+	    }
+	})
 }
-
-const jsonString = JSON.stringify(review, null, 2)
-fs.writeFile('./jsonwrite.json', jsonString, err => {
-    if (err) {
-        console.log('Error writing file', err)
-    } else {
-        console.log('Successfully wrote file')
-    }
-})
-
-
 </script>
 
 
